@@ -1,0 +1,59 @@
+configuration {
+    font: "JetBrainsMono Nerd Font 11";
+    show-icons: true;
+}
+
+@theme "/dev/null" 
+
+* {
+    bg: #11111b;      
+    fg: #cdd6f4;     
+    accent: #b4befe;  
+    selected: #313244;
+    
+    background-color: transparent;
+    text-color: @fg;
+}
+
+window {
+    background-color: @bg;
+    border: 2px;
+    border-color: @accent;
+    border-radius: 12px;
+    width: 450px;     
+    padding: 15px;
+}
+
+listview {
+    enabled:                     true;
+    lines:                       12;        
+    cycle:                       true;
+    dynamic:                     true;      
+    scrollbar:                   false;     
+    layout:                      vertical;
+    fixed-height:                false;     
+    spacing:                     6px;       
+}
+
+element {
+    enabled:                     true;
+    padding:                     6px 10px;  
+    border-radius:               6px;       
+    background-color:            transparent;
+    text-color:                  @fg;
+}
+
+element selected {
+    background-color: @selected;
+    text-color: @accent;
+    border-radius: 6px;
+}
+
+element-text {
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
+entry {
+    text-color: @fg;
+}

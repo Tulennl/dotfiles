@@ -1,0 +1,104 @@
+configuration {
+    show-icons:                 true;
+}
+
+* {
+    background:                  rgba(23, 23, 23, 0.85);
+    background-alt:              rgba(255, 255, 255, 0.03);
+    foreground:                  #e0e0e0;
+    selected:                    rgba(255, 255, 255, 0.08);
+    accent:                      #f5c2e7;
+}
+
+window {
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       320px;
+    enabled:                     true;
+    padding:                     0px;
+    border:                      1px;
+    border-radius:               20px;
+    border-color:                rgba(255, 255, 255, 0.08);
+    background-color:            @background;
+    cursor:                      "default";
+}
+
+mainbox {
+    enabled:                     true;
+    spacing:                     15px;
+    padding:                     25px;
+    background-color:            transparent;
+    children:                    [ "inputbar", "listview" ];
+}
+
+inputbar {
+    enabled:                     true;
+    padding:                     10px;
+    background-color:            @background-alt;
+    border:                      1px;
+    border-color:                rgba(255, 255, 255, 0.05);
+    border-radius:               12px;
+    children:                    [ "prompt" ];
+}
+
+prompt {
+    enabled:                     true;
+    background-color:            transparent;
+    text-color:                  @accent;
+    font:                        "JetBrainsMono Nerd Font Bold 14";
+    horizontal-align:            0.5;
+}
+
+entry {
+    enabled:                     false;
+}
+
+listview {
+    enabled:                     true;
+    columns:                     1;
+    lines:                       5;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    spacing:                     8px;
+    background-color:            transparent;
+}
+
+element {
+    enabled:                     true;
+    spacing:                     15px;
+    padding:                     10px 15px;
+    border-radius:               12px;
+    background-color:            transparent;
+    border:                      1px;
+    border-color:                transparent;
+    text-color:                  @foreground;
+    cursor:                      "pointer";
+}
+
+element selected.normal {
+    background-color:            @selected;
+    border-color:                @accent;
+    text-color:                  @accent;
+}
+
+element-icon {
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        22px;
+    cursor:                      inherit;
+}
+
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    font:                        "JetBrainsMono Nerd Font 12";
+}

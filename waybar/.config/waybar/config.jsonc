@@ -1,0 +1,142 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 32,
+    "spacing": 0,
+
+    "modules-left": [
+        "network#speed",
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "clock",
+        "custom/recording"
+    ],
+    "modules-right": [
+        "custom/updates",
+        "custom/separator",
+        "hyprland/language",
+        "custom/separator",
+        "cpu",
+        "memory",
+        "pulseaudio",
+        "custom/separator",
+        "custom/backlight",
+        "custom/separator",
+        "network#wifi",
+        "custom/separator",
+        "custom/power"
+    ],
+
+     
+    "custom/separator": {
+        "format": "|",
+        "tooltip": false
+    },
+
+     
+    "network#speed": {
+        "interval": 1,
+        "format": "󰇚 {bandwidthDownBytes}  󰕒 {bandwidthUpBytes}",
+        "format-disconnected": "󰖪 No Net",
+        "tooltip": false
+    },
+
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "all-outputs": true,
+        "clickable": true,
+        // Явно прописываем воркспейсы, чтобы по ним можно было кликать
+        "persistent-workspaces": {
+            "*": [1, 2, 3, 4, 5, 6, 7]
+        },
+        "format-icons": {
+            "active": "◉",
+            "empty": "•",
+            "default": "•"
+        }
+    },
+
+
+
+
+    "clock": {
+        "format": "󰅐  {:%H:%M}",
+        "tooltip": false
+    },
+
+
+
+
+    "custom/updates": {
+        "format": "{}",
+        "interval": 3600,
+        "exec": "~/.config/hypr/scripts/chek_updates.sh",
+        "return-type": "json",
+        "on-click": "kitty --class=update-terminal -e ~/.config/hypr/scripts/system_update.sh",
+        "signal": 8
+    },
+
+    "hyprland/language": {
+        "format": "󰌌  {}",
+        "format-en": "EN",
+        "format-ru": "RU",
+        "tooltip": false
+    },
+
+    "cpu": {
+        "format": "󰍛 {usage}%",
+        "tooltip": false
+    },
+
+    "memory": {
+        "format": "󰘚 {percentage}%",
+        "tooltip": false,
+        "on-click": "~/.config/hypr/scripts/ram_menu.sh"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟 Muted",
+        "format-icons": {
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "pavucontrol",
+        "tooltip": false
+    },
+
+"custom/backlight": {
+        "format": "󰃠  {}%",
+        "exec": "ddcutil getvcp 10 --brief | awk '{print $4}'",
+        "interval": 5,
+        "on-scroll-up": "ddcutil setvcp 10 + 5 && pkill -RTMIN+1 waybar",
+        "on-scroll-down": "ddcutil setvcp 10 - 5 && pkill -RTMIN+1 waybar",
+        "on-click": "ddcutil setvcp 10 50 && pkill -RTMIN+1 waybar", // Клик сбрасывает яркость на 50%
+        "signal": 1,
+        "tooltip": false
+    },
+
+    "network#wifi": {
+        "format-wifi": "",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰖪",
+        "tooltip-format": "{essid} ({signalStrength}%)",
+        "on-click": "/home/user/.local/bin/innu"
+    },
+
+"custom/recording": {
+    "format": "{}",
+    "return-type": "json",
+    "interval": 2,
+    "exec": "bash ~/.config/hypr/scripts/record.sh status",
+    "on-click": "bash ~/.config/hypr/scripts/record.sh pause",
+    "on-click-right": "bash ~/.config/hypr/scripts/record.sh toggle",
+    "signal": 9
+},
+
+    "custom/power": {
+        "format": "⏻",
+        "on-click": "~/.config/hypr/scripts/powermenu.sh",
+        "tooltip": false
+    }
+}

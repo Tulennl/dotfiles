@@ -1,0 +1,85 @@
+configuration {
+    modi:            "dmenu";
+    show-icons:      false;
+    hover-select:    true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
+}
+
+* {
+    bg:               rgba(23, 23, 23, 0.85);
+    fg:               #e0e0e0;
+    accent:           #f5c2e7;
+    card-bg:          rgba(255, 255, 255, 0.03);
+    background-color: transparent;
+    text-color:       @fg;
+}
+
+window {
+    width:            1000px;
+    height:           680px;
+    transparency:     "real";
+    background-color: @bg;
+    border:           1px;
+    border-color:     rgba(255, 255, 255, 0.08);
+    border-radius:    20px;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    padding:  25px;
+    spacing:  20px;
+}
+
+inputbar {
+    background-color: @card-bg;
+    border:           1px;
+    border-color:     rgba(255, 255, 255, 0.05);
+    border-radius:    12px;
+    padding:          12px 18px;
+    children:         [ prompt, entry ];
+    spacing:          15px;
+}
+
+prompt {
+    text-color: @accent;
+    font:       "JetBrainsMono Nerd Font Bold 14";
+}
+
+entry {
+    placeholder:       "Search Clipboard...";
+    placeholder-color: rgba(255, 255, 255, 0.3);
+    font:              "JetBrainsMono Nerd Font 12";
+}
+
+listview {
+    columns:       3;
+    lines:         4;
+    cycle:         true;
+    dynamic:       true;
+    layout:        vertical;
+    flow:          horizontal;
+    fixed-columns: true;
+    spacing:       18px;
+}
+
+element {
+    orientation:      vertical;
+    border-radius:    12px;
+    background-color: @card-bg;
+    border:           1px;
+    border-color:     rgba(255, 255, 255, 0.05);
+    padding:          20px;
+}
+
+element selected {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color:     @accent;
+}
+
+element-text {
+    font:             "JetBrainsMono Nerd Font 10";
+    expand:           true;
+    horizontal-align: 0.0;
+    vertical-align:   0.0;
+}

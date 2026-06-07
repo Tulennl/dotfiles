@@ -1,0 +1,96 @@
+configuration {
+    font: "JetBrainsMono Nerd Font 12";
+    show-icons: false;
+}
+
+window {
+    background-color: rgba(23, 23, 23, 0.85); /* Твой фирменный фон */
+    border: 1px;
+    border-color: rgba(255, 255, 255, 0.08); /* Твоя тонкая рамка */
+    border-radius: 20px;                      /* Крутые закругления капсулы */
+    
+    width: 25%;               /* Четверть экрана */
+    height: 85%;              /* Высота боковой панели */
+    
+    location: north west;     /* Привязка к верхнему левому углу */
+    anchor: north west;
+    x-offset: 12px;           /* Отступ слева */
+    y-offset: 54px;           /* Отступ сверху под Waybar */
+}
+
+mainbox {
+    background-color: transparent;
+    padding: 25px;
+    /* Вставляем Мode-switcher НАД строкой поиска */
+    children: [ mode-switcher, inputbar, listview ];
+}
+
+/* Стилизация контейнера вкладок */
+mode-switcher {
+    background-color: transparent;
+    spacing: 10px;
+    margin: 0px 0px 15px 0px;
+}
+
+/* Стилизация самих кнопок-вкладок (Main, Configs, KeyBinds) */
+button {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px;
+    border-color: rgba(255, 255, 255, 0.05);
+    text-color: #a0a0a0;
+    border-radius: 12px;
+    padding: 8px 0px;
+    horizontal-align: 0.5; /* Текст строго по центру вкладки */
+}
+
+/* Активная (выбранная в данный момент) вкладка */
+button selected {
+    background-color: rgba(255, 255, 255, 0.08);
+    text-color: #f5c2e7; /* Твой пастельно-розовый акцент */
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Строка поиска */
+inputbar {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px;
+    border-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 10px 15px;
+    margin: 0px 0px 15px 0px;
+    children: [ entry ];
+}
+
+entry {
+    background-color: transparent;
+    text-color: #e0e0e0;
+    placeholder: "Поиск...";
+    placeholder-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Список элементов */
+listview {
+    background-color: transparent;
+    columns: 1;
+    spacing: 8px;
+    cycle: true;
+    dynamic: true;
+}
+
+/* Элементы списка */
+element {
+    background-color: transparent;
+    text-color: #e0e0e0;
+    border-radius: 12px;
+    padding: 12px 15px;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+}
+
+element selected {
+    background-color: rgba(255, 255, 255, 0.05);
+    text-color: #f5c2e7;
+}

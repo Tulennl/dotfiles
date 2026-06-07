@@ -1,0 +1,189 @@
+/* Полный сброс */
+* {
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", sans-serif;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+window#waybar {
+    background-color: transparent;
+}
+
+/* Стилизация трех капсул */
+ .modules-center, .modules-right {
+    background: rgba(23, 23, 23, 0.85); 
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    border-radius: 20px; 
+    padding: 3px 14px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.modules-left {
+    margin-left: 12px;
+}
+
+.modules-right {
+    margin-right: 12px;
+}
+
+/* Общие правила для текста модулей */
+#network, #cpu, #memory, #pulseaudio, #clock, #custom-updates, #custom-power, #language, #custom-backlight {
+    background-color: transparent;
+    color: #e0e0e0;
+    padding: 0 7px;
+}
+
+/* Текстовые разделители "|" */
+#custom-separator {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 13px;
+    padding: 0 4px;
+}
+
+/* Счетчик обновлений */
+#custom-updates {
+    color: #a6e3a1;
+    font-weight: bold;
+}
+
+/* Модуль раскладки клавиатуры */
+#language {
+    color: #f9e2af; /* Приятный пастельно-желтый цвет */
+    font-weight: bold;
+}
+
+#custom-backlight {
+    color: #f9e2af;
+    font-weight: bold;
+}
+
+/* Кружочки рабочих столов (• • ◉ • • • •) */
+#workspaces button {
+    background-color: transparent;
+    color: #585b70; 
+    /* Увеличиваем padding: 5px вверх/вниз и 10px влево/вправо. Хитбокс станет огромным! */
+    padding: 5px 10px; 
+    margin: 0;
+    border-radius: 15px; /* Скругление для эффекта наведения */
+    font-size: 11px;
+    transition: all 0.2s ease;
+}
+
+#workspaces button.active {
+    color: #ffffff; 
+    font-size: 14px;
+}
+
+#workspaces button:hover {
+    color: #f5c2e7;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Кнопка выключения питания */
+#custom-power {
+    color: #f38ba8;
+    padding-right: 2px;
+}
+
+#network.speed {
+       background: rgba(23, 23, 23, 0.85); 
+       border: 1px solid rgba(255, 255, 255, 0.08); 
+       border-radius: 20px; 
+       padding: 3px 14px;
+       margin-top: 6px;
+       margin-bottom: 6px;
+       margin-left: 12px;
+       font-family: monospace;
+       min-width: 170px;
+}
+
+#workspaces {
+    background: rgba(23, 23, 23, 0.85); 
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    border-radius: 20px; 
+    padding: 0px 4px; /* Убираем отступы контейнера, чтобы их забрали кнопки */
+    margin-top: 6px;
+    margin-bottom: 6px;
+    margin-left: 10px; 
+}
+
+/* Кнопка-шестеренка вызова настроек с идеальным центрированием */
+#custom-settings {
+    background: rgba(23, 23, 23, 0.85); 
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    border-radius: 20px; 
+    color: #e0e0e0;
+    
+    /* Ограничиваем ширину, чтобы кнопка стремилась к форме круга */
+    min-width: 16px;
+    
+    /* Микро-подгонка под особенности глифа JetBrainsMono:
+       Добавляем чуть больше отступа СВЕРХУ, чтобы опустить иконку */
+    padding-top: 5px;     
+    padding-bottom: 3px;  
+    padding-left: 10px;   
+    padding-right: 10px;
+    
+    margin-top: 6px;
+    margin-bottom: 6px;
+    margin-right: 2px;
+    
+    font-size: 14px; /* Чуть-чуть уменьшили размер для лучшей геометрии */
+    transition: all 0.2s ease;
+}
+
+/* Эффект наведения */
+#custom-settings:hover {
+    color: #f5c2e7;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+tooltip {
+    background-color: #1e1e2e;
+    border: 1px solid #2b2b3c;
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+tooltip label {
+    color: #cdd6f4;
+}
+
+/* Базовый стиль модуля записи */
+#custom-recording {
+    font-size: 14px;
+    padding-left: 6px;
+    padding-right: 10px;
+    /* Плавный переход цвета при смене состояний */
+    transition: all 0.5s ease-in-out; 
+}
+
+/* Эффект плавного дыхания (пульсации) для зеленой точки */
+@keyframes breathing-dot {
+    0% {
+        color: #a6e3a1; /* Наш зеленый */
+        opacity: 1;
+    }
+    50% {
+        color: #abe9b3; /* Чуть светлее в пике */
+        opacity: 0.3;   /* Плавное растворение */
+    }
+    100% {
+        color: #a6e3a1;
+        opacity: 1;
+    }
+}
+
+/* Когда идет активная запись — точка плавно пульсирует */
+#custom-recording.recording {
+    animation: breathing-dot 2s infinite ease-in-out;
+}
+
+/* Когда запись на паузе — значок статичен и плавно меняет цвет на желтый */
+#custom-recording.paused {
+    color: #f9e2af;  /* Наш желтый */
+    animation: none; /* Отключаем пульсацию, чтобы не отвлекала */
+}
