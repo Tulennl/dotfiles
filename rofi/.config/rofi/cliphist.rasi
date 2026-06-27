@@ -6,14 +6,7 @@ configuration {
     me-accept-entry: "MousePrimary";
 }
 
-* {
-    bg:               rgba(23, 23, 23, 0.85);
-    fg:               #e0e0e0;
-    accent:           #f5c2e7;
-    card-bg:          rgba(255, 255, 255, 0.03);
-    background-color: transparent;
-    text-color:       @fg;
-}
+@import "shared/colors.rasi"
 
 window {
     width:            1000px;
@@ -21,7 +14,7 @@ window {
     transparency:     "real";
     background-color: @bg;
     border:           1px;
-    border-color:     rgba(255, 255, 255, 0.08);
+    border-color:     @window-border;
     border-radius:    20px;
 }
 
@@ -34,7 +27,7 @@ mainbox {
 inputbar {
     background-color: @card-bg;
     border:           1px;
-    border-color:     rgba(255, 255, 255, 0.05);
+    border-color:     @card-border;
     border-radius:    12px;
     padding:          12px 18px;
     children:         [ prompt, entry ];
@@ -68,12 +61,12 @@ element {
     border-radius:    12px;
     background-color: @card-bg;
     border:           1px;
-    border-color:     rgba(255, 255, 255, 0.05);
+    border-color:     @card-border;
     padding:          20px;
 }
 
 element selected {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: @selected;
     border-color:     @accent;
 }
 

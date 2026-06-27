@@ -2,12 +2,12 @@ configuration {
     show-icons:                 true;
 }
 
+@import "shared/colors.rasi"
+
 * {
-    background:                  rgba(23, 23, 23, 0.85);
-    background-alt:              rgba(255, 255, 255, 0.03);
-    foreground:                  #e0e0e0;
-    selected:                    rgba(255, 255, 255, 0.08);
-    accent:                      #f5c2e7;
+    background:                  @bg;
+    background-alt:              @card-bg;
+    foreground:                  @fg;
 }
 
 window {
@@ -20,7 +20,7 @@ window {
     padding:                     0px;
     border:                      1px;
     border-radius:               20px;
-    border-color:                rgba(255, 255, 255, 0.08);
+    border-color:                @window-border;
     background-color:            @background;
     cursor:                      "default";
 }
@@ -38,7 +38,7 @@ inputbar {
     padding:                     10px;
     background-color:            @background-alt;
     border:                      1px;
-    border-color:                rgba(255, 255, 255, 0.05);
+    border-color:                @card-border;
     border-radius:               12px;
     children:                    [ "prompt" ];
 }

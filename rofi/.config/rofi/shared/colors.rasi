@@ -1,0 +1,12 @@
+* {
+    bg:               rgba(23, 23, 23, 0.85);
+    fg:               #e0e0e0;
+    accent:           #f5c2e7;
+    selected:         rgba(255, 255, 255, 0.08);
+    card-bg:          rgba(255, 255, 255, 0.03);
+    card-border:      rgba(255, 255, 255, 0.05);
+    window-border:    rgba(255, 255, 255, 0.08);
+
+    background-color: transparent;
+    text-color:       @fg;
+}

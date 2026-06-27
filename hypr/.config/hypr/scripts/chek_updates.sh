@@ -1,14 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-official_updates=$(checkupdates 2>/dev/null)
-aur_updates=$(yay -Qua 2>/dev/null)
+source "$(dirname "$0")/lib/utils.sh"
 
-count_official=$(echo "$official_updates" | grep -v '^$' | wc -l)
-count_aur=$(echo "$aur_updates" | grep -v '^$' | wc -l)
-total_count=$((count_official + count_aur))
+fetch_updates
 
-if [ "$total_count" -gt 0 ]; then
-    echo "{\"text\": \"󰚰 $total_count\", \"tooltip\": \"Official: $count_official\nAUR: $count_aur\", \"class\": \"pending\"}"
+if [ "$TOTAL_COUNT" -gt 0 ]; then
+    echo "{\"text\": \"󰚰 $TOTAL_COUNT\", \"tooltip\": \"Official: $COUNT_OFFICIAL\nAUR: $COUNT_AUR\", \"class\": \"pending\"}"
 else
     echo "{\"text\": \"󰄬 0\", \"tooltip\": \"System up to date\", \"class\": \"updated\"}"
 fi
