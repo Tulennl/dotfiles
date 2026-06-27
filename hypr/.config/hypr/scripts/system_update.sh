@@ -3,7 +3,16 @@
 clear
 echo "󰍉 Checking repositories for updates..."
 
-official_updates=$(checkupdates 2>/dev/null)
+if ! command -v yay &>/dev/null; then
+    echo "Error: yay is not installed"
+    sleep 2
+    exit 1
+fi
+
+official_updates=""
+if command -v checkupdates &>/dev/null; then
+    official_updates=$(checkupdates 2>/dev/null)
+fi
 aur_updates=$(yay -Qua 2>/dev/null)
 
 clean_list=$(cat <(echo "$official_updates") <(echo "$aur_updates") | sort -u | grep -v '^$')
@@ -41,8 +50,11 @@ selected_items=$(echo "$fzf_output" | tail -n +2)
 
 if [ "$key_pressed" = "ctrl-a" ] || [[ "$selected_items" == *"--> 󰏖 [ FULL"* ]]; then
     echo -e "\n󰑓 Running FULL system upgrade..."
-    yay -Syu
-    pkill -SIGRTMIN+8 waybar
+    if yay -Syu; then
+        pkill -SIGRTMIN+8 waybar
+    else
+        echo -e "\n\033[0;31m Error: System upgrade failed. Check the output above.\033[0m"
+    fi
 
 elif [ -n "$selected_items" ]; then
     pkg_names=$(echo "$selected_items" | grep -v '-->' | awk '{print $1}' | tr '\n' ' ')
@@ -58,8 +70,11 @@ elif [ -n "$selected_items" ]; then
     echo -n "Upgrade only these packages? (y/N): "
     read -r answer
     if [[ "$answer" =~ ^[Yy]$ ]]; then
-        yay -Sy $pkg_names
-        pkill -SIGRTMIN+8 waybar
+        if yay -Sy $pkg_names; then
+            pkill -SIGRTMIN+8 waybar
+        else
+            echo -e "\n\033[0;31m Error: Package installation failed.\033[0m"
+        fi
     fi
 else
     echo "Upgrade canceled."

@@ -32,6 +32,13 @@ case "$1" in
             fi
             
             wf-recorder -c libx264 -p yuv420p -g "$GEOM" -f "$NAME" &
+            recorder_pid=$!
+            sleep 0.3
+            if ! kill -0 "$recorder_pid" 2>/dev/null; then
+                notify-send "Screen Record" "Failed to start wf-recorder" -i dialog-error
+                rm -f "$STATE_FILE"
+                exit 1
+            fi
             echo "recording" > "$STATE_FILE"
             update_waybar
         fi

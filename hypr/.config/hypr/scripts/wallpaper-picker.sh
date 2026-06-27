@@ -24,7 +24,9 @@ rofi_input=""
 for img in "${images[@]}"; do
     thumb="$THUMB_DIR/$img"
     if [ ! -f "$thumb" ] || [ "$img" -nt "$thumb" ]; then
-        convert "$img" -thumbnail 300x200^ -gravity center -extent 300x200 "$thumb"
+        if ! convert "$img" -thumbnail 300x200^ -gravity center -extent 300x200 "$thumb" 2>/dev/null; then
+            continue
+        fi
     fi
     rofi_input+="$img\0icon\x1f$thumb\n"
 done
@@ -39,16 +41,27 @@ if [ -n "$selected" ]; then
     
     echo "$target_wall" > "$HOME/.cache/current_wallpaper"
     
+    wallpaper_set=false
+
     if pgrep -x "awww" > /dev/null || pgrep -x "awww-daemon" > /dev/null; then
-        awww img "$target_wall" --transition-type "wipe" --transition-fps 75 --transition-angle 30
-    
+        if awww img "$target_wall" --transition-type "wipe" --transition-fps 75 --transition-angle 30; then
+            wallpaper_set=true
+        fi
     elif pgrep -x "swww-daemon" > /dev/null; then
-        swww img "$target_wall" --transition-type "wipe" --transition-fps 75 --transition-angle 30
-    
+        if swww img "$target_wall" --transition-type "wipe" --transition-fps 75 --transition-angle 30; then
+            wallpaper_set=true
+        fi
     elif pgrep -x "hyprpaper" > /dev/null; then
-        hyprctl hyprpaper preload "$target_wall"
-        hyprctl hyprpaper wallpaper ",$target_wall"
+        if hyprctl hyprpaper preload "$target_wall" && hyprctl hyprpaper wallpaper ",$target_wall"; then
+            wallpaper_set=true
+        fi
+    else
+        notify-send "Wallpaper Error" "No wallpaper daemon running" -i dialog-error
     fi
-    
-    notify-send "Wallpaper Changed" "$selected" -i "$THUMB_DIR/$selected"
+
+    if $wallpaper_set; then
+        notify-send "Wallpaper Changed" "$selected" -i "$THUMB_DIR/$selected"
+    else
+        notify-send "Wallpaper Error" "Failed to set wallpaper" -i dialog-error
+    fi
 fi
