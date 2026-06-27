@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-STATE_FILE="/tmp/recording_status"
+STATE_DIR="${XDG_RUNTIME_DIR:-/tmp}"
+STATE_FILE="$STATE_DIR/recording_status"
 DIR="$HOME/Videos/Recordings"
 mkdir -p "$DIR"
 

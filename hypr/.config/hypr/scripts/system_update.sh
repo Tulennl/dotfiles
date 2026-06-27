@@ -1,4 +1,4 @@
-л#!/bin/bash
+#!/bin/bash
 
 clear
 echo "󰍉 Checking repositories for updates..."
@@ -58,7 +58,7 @@ elif [ -n "$selected_items" ]; then
     echo -n "Upgrade only these packages? (y/N): "
     read -r answer
     if [[ "$answer" =~ ^[Yy]$ ]]; then
-        yay -Sy $pkg_names
+        yay -S $pkg_names
         pkill -SIGRTMIN+8 waybar
     fi
 else

@@ -10,7 +10,7 @@ options="$shutdown\n$reboot\n$suspend\n$lock\n$logout"
 
 chosen=$(echo -e "$options" | rofi -dmenu -i -p "System Power" -theme ~/.config/rofi/powermenu.rasi)
 
-case $chosen in
+case "$chosen" in
     $shutdown)
         systemctl poweroff
         ;;

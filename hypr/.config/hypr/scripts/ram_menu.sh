@@ -15,11 +15,16 @@ if [[ "$selected" == *"OPEN FULL MONITOR"* ]]; then
     kitty --class btop-float -e btop &
 else
     proc_name=$(echo "$selected" | awk -F '|' '{print $2}' | xargs)
-    
+
+    if [[ -z "$proc_name" ]] || [[ "$proc_name" =~ [^a-zA-Z0-9._-] ]]; then
+        notify-send "Error" "Invalid process name" -i dialog-error
+        exit 1
+    fi
+
     ans=$(echo -e "No\nYes" | rofi -dmenu -i -p "Kill $proc_name?" -theme-str 'window {width: 300px;} listview {lines: 2;}')
     
     if [[ "$ans" == "Yes" ]]; then
-        pkill -f "$proc_name"
+        pkill -x "$proc_name"
         notify-send "Process Terminated" "Application $proc_name has been successfully closed." -i dialog-information
     fi
 fi
