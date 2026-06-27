@@ -3,58 +3,55 @@ configuration {
     show-icons: false;
 }
 
+@import "shared/colors.rasi"
+
 window {
-    background-color: rgba(23, 23, 23, 0.85); /* Твой фирменный фон */
+    background-color: @bg;
     border: 1px;
-    border-color: rgba(255, 255, 255, 0.08); /* Твоя тонкая рамка */
-    border-radius: 20px;                      /* Крутые закругления капсулы */
+    border-color: @window-border;
+    border-radius: 20px;
     
-    width: 25%;               /* Четверть экрана */
-    height: 85%;              /* Высота боковой панели */
+    width: 25%;
+    height: 85%;
     
-    location: north west;     /* Привязка к верхнему левому углу */
+    location: north west;
     anchor: north west;
-    x-offset: 12px;           /* Отступ слева */
-    y-offset: 54px;           /* Отступ сверху под Waybar */
+    x-offset: 12px;
+    y-offset: 54px;
 }
 
 mainbox {
     background-color: transparent;
     padding: 25px;
-    /* Вставляем Мode-switcher НАД строкой поиска */
     children: [ mode-switcher, inputbar, listview ];
 }
 
-/* Стилизация контейнера вкладок */
 mode-switcher {
     background-color: transparent;
     spacing: 10px;
     margin: 0px 0px 15px 0px;
 }
 
-/* Стилизация самих кнопок-вкладок (Main, Configs, KeyBinds) */
 button {
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: @card-bg;
     border: 1px;
-    border-color: rgba(255, 255, 255, 0.05);
+    border-color: @card-border;
     text-color: #a0a0a0;
     border-radius: 12px;
     padding: 8px 0px;
-    horizontal-align: 0.5; /* Текст строго по центру вкладки */
+    horizontal-align: 0.5;
 }
 
-/* Активная (выбранная в данный момент) вкладка */
 button selected {
-    background-color: rgba(255, 255, 255, 0.08);
-    text-color: #f5c2e7; /* Твой пастельно-розовый акцент */
+    background-color: @selected;
+    text-color: @accent;
     border-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Строка поиска */
 inputbar {
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: @card-bg;
     border: 1px;
-    border-color: rgba(255, 255, 255, 0.05);
+    border-color: @card-border;
     border-radius: 12px;
     padding: 10px 15px;
     margin: 0px 0px 15px 0px;
@@ -63,12 +60,11 @@ inputbar {
 
 entry {
     background-color: transparent;
-    text-color: #e0e0e0;
+    text-color: @fg;
     placeholder: "Поиск...";
     placeholder-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Список элементов */
 listview {
     background-color: transparent;
     columns: 1;
@@ -77,10 +73,9 @@ listview {
     dynamic: true;
 }
 
-/* Элементы списка */
 element {
     background-color: transparent;
-    text-color: #e0e0e0;
+    text-color: @fg;
     border-radius: 12px;
     padding: 12px 15px;
 }
@@ -91,6 +86,6 @@ element-text {
 }
 
 element selected {
-    background-color: rgba(255, 255, 255, 0.05);
-    text-color: #f5c2e7;
+    background-color: @selected;
+    text-color: @accent;
 }

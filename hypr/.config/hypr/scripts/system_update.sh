@@ -1,18 +1,15 @@
-л#!/bin/bash
+#!/usr/bin/env bash
+
+source "$(dirname "$0")/lib/utils.sh"
 
 clear
 echo "󰍉 Checking repositories for updates..."
 
-official_updates=$(checkupdates 2>/dev/null)
-aur_updates=$(yay -Qua 2>/dev/null)
+fetch_updates
 
-clean_list=$(cat <(echo "$official_updates") <(echo "$aur_updates") | sort -u | grep -v '^$')
+clean_list=$(cat <(echo "$OFFICIAL_UPDATES") <(echo "$AUR_UPDATES") | sort -u | grep -v '^$')
 
-count_official=$(echo "$official_updates" | grep -v '^$' | wc -l)
-count_aur=$(echo "$aur_updates" | grep -v '^$' | wc -l)
-total_count=$((count_official + count_aur))
-
-if [ "$total_count" -eq 0 ]; then
+if [ "$TOTAL_COUNT" -eq 0 ]; then
     echo "󰄲 System is already up to date!"
     sleep 1.5
     exit 0
@@ -27,7 +24,7 @@ HEADER_TEXT=$(echo -e "󰏗 INTERACTIVE UPDATE MANAGER\n" \
                       " Action     : [Enter] - install selected (or current line)\n" \
                       " Hotkey     : [Ctrl-A] - IMMEDIATELY UPGRADE ENTIRE SYSTEM\n" \
                       "------------------------------------------------------------\n" \
-                      " Available updates: $total_count (Pacman: $count_official | AUR: $count_aur)")
+                      " Available updates: $TOTAL_COUNT (Pacman: $COUNT_OFFICIAL | AUR: $COUNT_AUR)")
 
 fzf_output=$(echo "$fzf_list" | env SHELL=/bin/bash fzf -m \
     --expect=ctrl-a \
@@ -42,7 +39,7 @@ selected_items=$(echo "$fzf_output" | tail -n +2)
 if [ "$key_pressed" = "ctrl-a" ] || [[ "$selected_items" == *"--> 󰏖 [ FULL"* ]]; then
     echo -e "\n󰑓 Running FULL system upgrade..."
     yay -Syu
-    pkill -SIGRTMIN+8 waybar
+    refresh_waybar 8
 
 elif [ -n "$selected_items" ]; then
     pkg_names=$(echo "$selected_items" | grep -v '-->' | awk '{print $1}' | tr '\n' ' ')
@@ -59,7 +56,7 @@ elif [ -n "$selected_items" ]; then
     read -r answer
     if [[ "$answer" =~ ^[Yy]$ ]]; then
         yay -Sy $pkg_names
-        pkill -SIGRTMIN+8 waybar
+        refresh_waybar 8
     fi
 else
     echo "Upgrade canceled."

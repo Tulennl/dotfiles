@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+source "$(dirname "$0")/lib/utils.sh"
 
 get_top_ram() {
     echo "󰆼 [ OPEN FULL MONITOR (All Processes) ]"
@@ -20,6 +22,6 @@ else
     
     if [[ "$ans" == "Yes" ]]; then
         pkill -f "$proc_name"
-        notify-send "Process Terminated" "Application $proc_name has been successfully closed." -i dialog-information
+        notify "Process Terminated" "Application $proc_name has been successfully closed." "dialog-information"
     fi
 fi

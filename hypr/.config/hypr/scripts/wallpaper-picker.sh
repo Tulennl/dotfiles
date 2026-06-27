@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
+source "$(dirname "$0")/lib/utils.sh"
+
 WALL_DIR="$HOME/Pictures/Wallpapers"
 THUMB_DIR="$HOME/.cache/wallpaper_thumbs"
 ROFI_THEME="$HOME/.config/rofi/wallpapers.rasi"
 
-mkdir -p "$THUMB_DIR"
+ensure_dir "$THUMB_DIR"
 
 if [ ! -d "$WALL_DIR" ]; then
-    notify-send "Error" "Wallpaper folder not found!"
+    notify "Error" "Wallpaper folder not found!"
     exit 1
 fi
 
@@ -16,7 +18,7 @@ shopt -s nullglob
 images=( *.{jpg,jpeg,png,webp} )
 
 if [ ${#images[@]} -eq 0 ]; then
-    notify-send "Gallery" "No images found in the folder"
+    notify "Gallery" "No images found in the folder"
     exit 1
 fi
 
@@ -29,10 +31,7 @@ for img in "${images[@]}"; do
     rofi_input+="$img\0icon\x1f$thumb\n"
 done
 
-selected=$(echo -en "$rofi_input" | rofi -dmenu \
-    -theme "$ROFI_THEME" \
-    -p "Gallery" \
-    -placeholder "Search Wallpaper...")
+selected=$(echo -en "$rofi_input" | rofi_menu "$ROFI_THEME" "Gallery" -placeholder "Search Wallpaper...")
 
 if [ -n "$selected" ]; then
     target_wall="$WALL_DIR/$selected"
@@ -50,5 +49,5 @@ if [ -n "$selected" ]; then
         hyprctl hyprpaper wallpaper ",$target_wall"
     fi
     
-    notify-send "Wallpaper Changed" "$selected" -i "$THUMB_DIR/$selected"
+    notify "Wallpaper Changed" "$selected" "$THUMB_DIR/$selected"
 fi
