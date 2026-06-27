@@ -12,18 +12,20 @@ chosen=$(echo -e "$options" | rofi -dmenu -i -p "System Power" -theme ~/.config/
 
 case $chosen in
     $shutdown)
-        systemctl poweroff
+        systemctl poweroff || notify-send "Power Error" "Failed to power off" -i dialog-error
         ;;
     $reboot)
-        systemctl reboot
+        systemctl reboot || notify-send "Power Error" "Failed to reboot" -i dialog-error
         ;;
     $suspend)
-        systemctl suspend
+        systemctl suspend || notify-send "Power Error" "Failed to suspend" -i dialog-error
         ;;
     $lock)
-        hyprlock || swaylock
+        if ! hyprlock && ! swaylock; then
+            notify-send "Lock Error" "Neither hyprlock nor swaylock available" -i dialog-error
+        fi
         ;;
     $logout)
-        hyprctl dispatch exit
+        hyprctl dispatch exit || notify-send "Logout Error" "Failed to exit session" -i dialog-error
         ;;
 esac

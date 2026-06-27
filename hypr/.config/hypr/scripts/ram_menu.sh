@@ -19,7 +19,10 @@ else
     ans=$(echo -e "No\nYes" | rofi -dmenu -i -p "Kill $proc_name?" -theme-str 'window {width: 300px;} listview {lines: 2;}')
     
     if [[ "$ans" == "Yes" ]]; then
-        pkill -f "$proc_name"
-        notify-send "Process Terminated" "Application $proc_name has been successfully closed." -i dialog-information
+        if pkill -f "$proc_name"; then
+            notify-send "Process Terminated" "$proc_name has been closed" -i dialog-information
+        else
+            notify-send "Process Error" "Failed to terminate $proc_name" -i dialog-error
+        fi
     fi
 fi
